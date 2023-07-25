@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "OcarinAngular", "angularapp\OcarinAngular.esproj", "{C4CF08A0-617B-47BE-B65D-1A21D1C5BF8E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcarinAPI", "webapi\OcarinAPI.csproj", "{4AFC2764-9008-42EB-BDDF-4308EF84E60B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C4CF08A0-617B-47BE-B65D-1A21D1C5BF8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4CF08A0-617B-47BE-B65D-1A21D1C5BF8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4CF08A0-617B-47BE-B65D-1A21D1C5BF8E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C4CF08A0-617B-47BE-B65D-1A21D1C5BF8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4CF08A0-617B-47BE-B65D-1A21D1C5BF8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4CF08A0-617B-47BE-B65D-1A21D1C5BF8E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4AFC2764-9008-42EB-BDDF-4308EF84E60B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AFC2764-9008-42EB-BDDF-4308EF84E60B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AFC2764-9008-42EB-BDDF-4308EF84E60B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AFC2764-9008-42EB-BDDF-4308EF84E60B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10C3F728-F434-4361-8955-B8B6E7B7CC44}
+	EndGlobalSection
+EndGlobal
