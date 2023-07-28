@@ -25,10 +25,12 @@ namespace OcarinAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Animateurs>>> GetAnimateurs()
         {
+          
           if (_context.Animateurs == null)
           {
               return NotFound();
           }
+            
             return await _context.Animateurs.ToListAsync();
         }
 
