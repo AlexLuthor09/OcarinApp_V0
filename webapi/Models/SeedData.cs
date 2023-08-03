@@ -127,6 +127,39 @@ namespace OcarinAPI.Models
                     context.SaveChanges();
 
                 }
+                if (context.Plaines.Any())
+                {
+                    // DB has been seeded so no movies are added if there are one or more movies in the DB 
+                }
+                else
+                {
+                    context.Plaines.AddRange(
+                        new Plaines
+                        {
+                            NomPlaine = "Tournai 2",
+                            DateDebut = DateTime.Parse("2023-07-20"),
+                            DateFin = DateTime.Parse("2023-07-25"),
+                            CapaciteMax = 70,
+
+                        },
+                        new Plaines
+                        {
+                            NomPlaine = "Tournai 1",
+                            DateDebut = DateTime.Parse("2023-07-13"),
+                            DateFin = DateTime.Parse("2023-07-18"),
+                            CapaciteMax = 70,
+                        },
+                        new Plaines
+                        {
+                            NomPlaine = "Silly 1",
+                            DateDebut = DateTime.Parse("2023-07-20"),
+                            DateFin = DateTime.Parse("2023-07-25"),
+                            CapaciteMax = 70,
+                        }
+                    );
+                    context.SaveChanges();
+
+                }
             }
         }
     }

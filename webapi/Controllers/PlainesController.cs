@@ -10,7 +10,7 @@ using OcarinAPI.Models;
 
 namespace OcarinAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class PlainesController : ControllerBase
     {
