@@ -10,21 +10,18 @@ namespace OcarinAPI.Models
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var context = new OcarinAPIContext(serviceProvider.GetRequiredService<DbContextOptions<OcarinAPIContext>>()))
+            using (var context = new OcarinaDBContext(serviceProvider.GetRequiredService<DbContextOptions<OcarinaDBContext>>()))
             {
                 // Look for any Enfants.
-                if (context.Enfants.Any())
+                if (!context.Enfants.Any())
                 {
                     // DB has been seeded so no movies are added if there are one or more movies in the DB 
-                }
-                else
-                {
                     context.Enfants.AddRange(
                         new Enfants
                         {
                             Nom = "PetitEnfant",
                             Prenom = "Marius",
-                            DateNaissance = DateTime.Now,
+                            DateNaissance = DateTime.Parse("2020-02-25"),
                             TrancheAge = "3-6 ans",
                             Adresse = "Avenue des tes mort, 69 évreux",
                             NumeroTelephone = "0253694587",
@@ -38,7 +35,7 @@ namespace OcarinAPI.Models
                         {
                             Nom ="MoyenEnfant",
                             Prenom = "Jul",
-                            DateNaissance = DateTime.Now,
+                            DateNaissance = DateTime.Parse("2016-06-18"),
                             TrancheAge = "6-9 ans",
                             Adresse = "Avenue des tes mort, 69 évreux",
                             NumeroTelephone = "0253694587",
@@ -53,7 +50,7 @@ namespace OcarinAPI.Models
                         {
                             Nom = "GrandEnfant",
                             Prenom = "Tom",
-                            DateNaissance = DateTime.Parse("2000-01-20"),
+                            DateNaissance = DateTime.Parse("2013-01-20"),
                             TrancheAge = "9-12 ans",
                             Adresse = "Avenue des tes mort, 69 évreux",
                             NumeroTelephone = "0253694587",
@@ -68,12 +65,9 @@ namespace OcarinAPI.Models
 
                 }
                 // Look for any Animateur.
-                if (context.Animateurs.Any())
+                if (!context.Animateurs.Any())
                 {
-                    // DB has been seeded so no movies are added if there are one or more movies in the DB 
-                }
-                else
-                {
+
                     context.Animateurs.AddRange(
                         new Animateurs
                         {
@@ -127,11 +121,7 @@ namespace OcarinAPI.Models
                     context.SaveChanges();
 
                 }
-                if (context.Plaines.Any())
-                {
-                    // DB has been seeded so no movies are added if there are one or more movies in the DB 
-                }
-                else
+                if (!context.Plaines.Any())
                 {
                     context.Plaines.AddRange(
                         new Plaines
@@ -147,14 +137,14 @@ namespace OcarinAPI.Models
                             NomPlaine = "Tournai 1",
                             DateDebut = DateTime.Parse("2023-07-13"),
                             DateFin = DateTime.Parse("2023-07-18"),
-                            CapaciteMax = 70,
+                            CapaciteMax = 100,
                         },
                         new Plaines
                         {
                             NomPlaine = "Silly 1",
                             DateDebut = DateTime.Parse("2023-07-20"),
                             DateFin = DateTime.Parse("2023-07-25"),
-                            CapaciteMax = 70,
+                            CapaciteMax = 50,
                         }
                     );
                     context.SaveChanges();

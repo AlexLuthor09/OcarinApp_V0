@@ -6,8 +6,8 @@ using OcarinAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 //Connection to the DB
-builder.Services.AddDbContext<OcarinAPIContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("OcarinApp") ?? throw new InvalidOperationException("Connection string 'OcarinApp' not found.")));
+builder.Services.AddDbContext<OcarinaDBContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("OcarinaDB") ?? throw new InvalidOperationException("Connection string 'OcarinaDB' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

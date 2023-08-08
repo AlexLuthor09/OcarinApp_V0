@@ -2,125 +2,162 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OcarinAPI.Data;
 using OcarinAPI.Models;
 
 namespace OcarinAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AnimateursController : ControllerBase
+    public class AnimateursController : Controller
     {
-        private readonly OcarinAPIContext _context;
+        private readonly OcarinaDBContext _context;
 
-        public AnimateursController(OcarinAPIContext context)
+        public AnimateursController(OcarinaDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Animateurs
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Animateurs>>> GetAnimateurs()
+        // GET: Animateurs
+        public async Task<IActionResult> Index()
         {
-          
-          if (_context.Animateurs == null)
-          {
-              return NotFound();
-          }
-            
-            return await _context.Animateurs.ToListAsync();
+              return _context.Animateurs != null ? 
+                          View(await _context.Animateurs.ToListAsync()) :
+                          Problem("Entity set 'OcarinaDBContext.Animateurs'  is null.");
         }
 
-        // GET: api/Animateurs/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Animateurs>> GetAnimateurs(int id)
+        // GET: Animateurs/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-          if (_context.Animateurs == null)
-          {
-              return NotFound();
-          }
-            var animateurs = await _context.Animateurs.FindAsync(id);
+            if (id == null || _context.Animateurs == null)
+            {
+                return NotFound();
+            }
 
+            var animateurs = await _context.Animateurs
+                .FirstOrDefaultAsync(m => m.ID_animateur == id);
             if (animateurs == null)
             {
                 return NotFound();
             }
 
-            return animateurs;
+            return View(animateurs);
         }
 
-        // PUT: api/Animateurs/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAnimateurs(int id, Animateurs animateurs)
+        // GET: Animateurs/Create
+        public IActionResult Create()
         {
-            if (id != animateurs.ID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(animateurs).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AnimateursExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return View();
         }
 
-        // POST: api/Animateurs
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: Animateurs/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public async Task<ActionResult<Animateurs>> PostAnimateurs(Animateurs animateurs)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID_animateur,Prenom,Nom,ResponsableTrancheAge,DateNaissance,Adresse,NumeroTelephone,Email,Allergie,Commentaire,AnneeFormation")] Animateurs animateurs)
         {
-          if (_context.Animateurs == null)
-          {
-              return Problem("Entity set 'OcarinAPIContext.Animateurs'  is null.");
-          }
-            _context.Animateurs.Add(animateurs);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAnimateurs", new { id = animateurs.ID }, animateurs);
+            if (ModelState.IsValid)
+            {
+                _context.Add(animateurs);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(animateurs);
         }
 
-        // DELETE: api/Animateurs/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAnimateurs(int id)
+        // GET: Animateurs/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _context.Animateurs == null)
+            {
+                return NotFound();
+            }
+
+            var animateurs = await _context.Animateurs.FindAsync(id);
+            if (animateurs == null)
+            {
+                return NotFound();
+            }
+            return View(animateurs);
+        }
+
+        // POST: Animateurs/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("ID_animateur,Prenom,Nom,ResponsableTrancheAge,DateNaissance,Adresse,NumeroTelephone,Email,Allergie,Commentaire,AnneeFormation")] Animateurs animateurs)
+        {
+            if (id != animateurs.ID_animateur)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(animateurs);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AnimateursExists(animateurs.ID_animateur))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(animateurs);
+        }
+
+        // GET: Animateurs/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null || _context.Animateurs == null)
+            {
+                return NotFound();
+            }
+
+            var animateurs = await _context.Animateurs
+                .FirstOrDefaultAsync(m => m.ID_animateur == id);
+            if (animateurs == null)
+            {
+                return NotFound();
+            }
+
+            return View(animateurs);
+        }
+
+        // POST: Animateurs/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Animateurs == null)
             {
-                return NotFound();
+                return Problem("Entity set 'OcarinaDBContext.Animateurs'  is null.");
             }
             var animateurs = await _context.Animateurs.FindAsync(id);
-            if (animateurs == null)
+            if (animateurs != null)
             {
-                return NotFound();
+                _context.Animateurs.Remove(animateurs);
             }
-
-            _context.Animateurs.Remove(animateurs);
+            
             await _context.SaveChangesAsync();
-
-            return NoContent();
+            return RedirectToAction(nameof(Index));
         }
 
         private bool AnimateursExists(int id)
         {
-            return (_context.Animateurs?.Any(e => e.ID == id)).GetValueOrDefault();
+          return (_context.Animateurs?.Any(e => e.ID_animateur == id)).GetValueOrDefault();
         }
     }
 }

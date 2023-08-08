@@ -2,10 +2,11 @@
 {
     public class Enfants
     {
-        public int ID { get; set; }
-        public string? Nom { get; set; }
-        public string? Prenom { get; set; }
+        public int ID_enfant { get; set; }
+        public string Nom { get; set; }
+        public string Prenom { get; set; }
         public DateTime DateNaissance { get; set; }
+        public int? Age { get; set; }
         public string? TrancheAge { get; set; }
         public string? Adresse { get; set; }
         public string? NumeroTelephone { get; set; }
