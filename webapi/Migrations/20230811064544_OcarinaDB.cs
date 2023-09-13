@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OcarinAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class OcarinaDBMigration : Migration
+    public partial class OcarinaDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,6 @@ namespace OcarinAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Prenom = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nom = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ResponsableTrancheAge = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateNaissance = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Adresse = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumeroTelephone = table.Column<string>(type: "nvarchar(max)", nullable: true),

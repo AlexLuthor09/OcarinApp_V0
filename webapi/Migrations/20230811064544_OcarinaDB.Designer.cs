@@ -12,8 +12,8 @@ using OcarinAPI.Data;
 namespace OcarinAPI.Migrations
 {
     [DbContext(typeof(OcarinaDBContext))]
-    [Migration("20230808053942_OcarinaDBMigration")]
-    partial class OcarinaDBMigration
+    [Migration("20230811064544_OcarinaDB")]
+    partial class OcarinaDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,9 +60,6 @@ namespace OcarinAPI.Migrations
 
                     b.Property<string>("Prenom")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResponsableTrancheAge")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID_animateur");
@@ -139,7 +136,10 @@ namespace OcarinAPI.Migrations
 
                     b.HasKey("ID_enfant");
 
-                    b.ToTable("Enfants");
+                    b.ToTable("Enfants", t =>
+                        {
+                            t.HasTrigger("Trg_Enfants_Age");
+                        });
                 });
 
             modelBuilder.Entity("OcarinAPI.Models.Enfants_Plaines", b =>
@@ -178,7 +178,10 @@ namespace OcarinAPI.Migrations
 
                     b.HasIndex("ID_plaine");
 
-                    b.ToTable("Enfants_Plaines");
+                    b.ToTable("Enfants_Plaines", t =>
+                        {
+                            t.HasTrigger("Trg_Enfants_Plaines_DateInscription");
+                        });
                 });
 
             modelBuilder.Entity("OcarinAPI.Models.Plaines", b =>

@@ -7,61 +7,60 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OcarinAPI.Data;
 using OcarinAPI.Models;
-using OcarinAPI.Models.ModelsNotDB;
 
 namespace OcarinAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AnimateursController : ControllerBase
+    public class PlainesController : ControllerBase
     {
         private readonly OcarinaDBContext _context;
 
-        public AnimateursController(OcarinaDBContext context)
+        public PlainesController(OcarinaDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Animateurs
+        // GET: api/Plaines
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Animateurs>>> GetAnimateurs()
+        public async Task<ActionResult<IEnumerable<Plaines>>> GetPlaines()
         {
-          if (_context.Animateurs == null)
+          if (_context.Plaines == null)
           {
               return NotFound();
           }
-
-            return await _context.Animateurs.ToListAsync();
+            return await _context.Plaines.ToListAsync();
         }
-        // GET: api/Animateurs/5
+
+        // GET: api/Plaines/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Animateurs>> GetAnimateurs(int id)
+        public async Task<ActionResult<Plaines>> GetPlaines(int id)
         {
-          if (_context.Animateurs == null)
+          if (_context.Plaines == null)
           {
               return NotFound();
           }
-            var animateurs = await _context.Animateurs.FindAsync(id);
+            var plaines = await _context.Plaines.FindAsync(id);
 
-            if (animateurs == null)
+            if (plaines == null)
             {
                 return NotFound();
             }
 
-            return animateurs;
+            return plaines;
         }
 
-        // PUT: api/Animateurs/5
+        // PUT: api/Plaines/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAnimateurs(int id, Animateurs animateurs)
+        public async Task<IActionResult> PutPlaines(int id, Plaines plaines)
         {
-            if (id != animateurs.ID_animateur)
+            if (id != plaines.ID_plaine)
             {
                 return BadRequest();
             }
 
-            _context.Entry(animateurs).State = EntityState.Modified;
+            _context.Entry(plaines).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +68,7 @@ namespace OcarinAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AnimateursExists(id))
+                if (!PlainesExists(id))
                 {
                     return NotFound();
                 }
@@ -82,44 +81,44 @@ namespace OcarinAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Animateurs
+        // POST: api/Plaines
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Animateurs>> PostAnimateurs(Animateurs animateurs)
+        public async Task<ActionResult<Plaines>> PostPlaines(Plaines plaines)
         {
-          if (_context.Animateurs == null)
+          if (_context.Plaines == null)
           {
-              return Problem("Entity set 'OcarinaDBContext.Animateurs'  is null.");
+              return Problem("Entity set 'OcarinaDBContext.Plaines'  is null.");
           }
-            _context.Animateurs.Add(animateurs);
+            _context.Plaines.Add(plaines);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAnimateurs", new { id = animateurs.ID_animateur }, animateurs);
+            return CreatedAtAction("GetPlaines", new { id = plaines.ID_plaine }, plaines);
         }
 
-        // DELETE: api/Animateurs/5
+        // DELETE: api/Plaines/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAnimateurs(int id)
+        public async Task<IActionResult> DeletePlaines(int id)
         {
-            if (_context.Animateurs == null)
+            if (_context.Plaines == null)
             {
                 return NotFound();
             }
-            var animateurs = await _context.Animateurs.FindAsync(id);
-            if (animateurs == null)
+            var plaines = await _context.Plaines.FindAsync(id);
+            if (plaines == null)
             {
                 return NotFound();
             }
 
-            _context.Animateurs.Remove(animateurs);
+            _context.Plaines.Remove(plaines);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool AnimateursExists(int id)
+        private bool PlainesExists(int id)
         {
-            return (_context.Animateurs?.Any(e => e.ID_animateur == id)).GetValueOrDefault();
+            return (_context.Plaines?.Any(e => e.ID_plaine == id)).GetValueOrDefault();
         }
     }
 }

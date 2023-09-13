@@ -59,9 +59,6 @@ namespace OcarinAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ResponsableTrancheAge")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("ID_animateur");
 
                     b.ToTable("Animateurs");
@@ -136,7 +133,10 @@ namespace OcarinAPI.Migrations
 
                     b.HasKey("ID_enfant");
 
-                    b.ToTable("Enfants");
+                    b.ToTable("Enfants", t =>
+                        {
+                            t.HasTrigger("Trg_Enfants_Age");
+                        });
                 });
 
             modelBuilder.Entity("OcarinAPI.Models.Enfants_Plaines", b =>
@@ -175,7 +175,10 @@ namespace OcarinAPI.Migrations
 
                     b.HasIndex("ID_plaine");
 
-                    b.ToTable("Enfants_Plaines");
+                    b.ToTable("Enfants_Plaines", t =>
+                        {
+                            t.HasTrigger("Trg_Enfants_Plaines_DateInscription");
+                        });
                 });
 
             modelBuilder.Entity("OcarinAPI.Models.Plaines", b =>
