@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using OcarinAPI.Data;
 using OcarinAPI.Models;
 using OcarinAPI.Models.ModelsNotDB;
 
 namespace OcarinAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("OcarinApi/[controller]")]
     [ApiController]
     public class AnimateursController : ControllerBase
     {
@@ -22,7 +24,7 @@ namespace OcarinAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Animateurs
+        // GET: OcarinApi/Animateurs
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Animateurs>>> GetAnimateurs()
         {
@@ -33,15 +35,36 @@ namespace OcarinAPI.Controllers
 
             return await _context.Animateurs.ToListAsync();
         }
-        // GET: api/Animateurs/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Animateurs>> GetAnimateurs(int id)
+        // GET: OcarinApi/Animateurs/[ID_plaine]
+        [HttpGet("{ID_plaines}")]
+        public object GetAnimateurs(int ID_plaines)
         {
           if (_context.Animateurs == null)
           {
               return NotFound();
           }
-            var animateurs = await _context.Animateurs.FindAsync(id);
+            var query = from a in _context.Animateurs
+                        join ap in _context.Animateurs_Plaines
+                        on a.ID_animateur equals ap.ID_animateur
+                        where ap.ID_plaine == ID_plaines
+                        select new
+                        {
+                            a.ID_animateur,
+                            ap.ID_plaine,
+                            a.Prenom,
+                            a.Nom,
+                            a.NumeroTelephone,
+                            a.Adresse,
+                            a.Email,
+                            a.Allergie,
+                            a.Commentaire,
+                            a.AnneeFormation,
+                            ap.ResponsableTrancheAge,
+                            ap.FicheSante
+                           
+                        };
+
+            var animateurs =  query.ToList();
 
             if (animateurs == null)
             {
